@@ -1,0 +1,12 @@
+.Log {
+    margin: 32px;
+    padding: 16px;
+    background-color: white;
+    color: black;
+    text-align: start;
+    height: 50vh;
+    max-height: 50vh;
+    width: 80vw;
+    max-width: 80vw;
+    overflow-y: scroll;
+}
