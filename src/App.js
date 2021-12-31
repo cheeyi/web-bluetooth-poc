@@ -11,7 +11,6 @@ class AppContainer extends React.Component {
     super(props);
     this.state = {
       currentStatus: Idle,
-      device: null,
       logEvents: [{date: this.currentDate(), content: 'Beginning of log'}]
     }
   }
@@ -41,9 +40,17 @@ class AppContainer extends React.Component {
     );
   }
 
+  componentDidMount() {
+    this.checkBluetoothAvailability();
+  }
+
   onClick() {
     switch (this.state.currentStatus) {
       case Idle:
+        if (!navigator.bluetooth) {
+          this.errorLog("Cannot start scan, Bluetooth not supported!");
+          break;
+        }
         this.log("Starting a BLE scan");
         this.setState({currentStatus: Scanning});
         navigator.bluetooth.requestDevice({
@@ -94,6 +101,20 @@ class AppContainer extends React.Component {
       this.device = null;
     }
     this.setState({currentStatus: Idle});
+  }
+
+  checkBluetoothAvailability() {
+    if (!navigator.bluetooth) {
+      this.errorLog("Bluetooth capability not available");
+      return;
+    }
+    navigator.bluetooth.getAvailability().then(isAvailable => {
+      if (isAvailable) {
+        this.log("Bluetooth is available");
+      } else {
+        this.errorLog("Bluetooth capability not available or user rejected permission");
+      }
+    });
   }
 
   log(toLog) {
