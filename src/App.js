@@ -47,44 +47,7 @@ class AppContainer extends React.Component {
   onClick() {
     switch (this.state.currentStatus) {
       case Idle:
-        if (!navigator.bluetooth) {
-          this.errorLog("Cannot start scan, Bluetooth not supported!");
-          break;
-        }
-        this.log("Starting a BLE scan");
-        this.setState({currentStatus: Scanning});
-        navigator.bluetooth.requestDevice({
-          filters: [{
-            services: ['environmental_sensing'],
-          }],
-          optionalServices: ['battery_service'],
-        })
-          .then(device => {
-             this.log(`User confirmed ${device.name}, attempting to connect`);
-             this.setState({currentStatus: Connecting});
-             return device.gatt.connect();
-          })
-          .then(server => {
-            this.device = server.device;
-            // Getting Battery Service…
-            return server.getPrimaryService('battery_service');
-          })
-          .then(service => {
-            // Getting Battery Level Characteristic…
-            return service.getCharacteristic('battery_level');
-          })
-          .then(characteristic => {
-            // Reading Battery Level…
-            return characteristic.readValue();
-          })
-          .then(value => {
-            this.log(`Battery percentage is ${value.getUint8(0)}`);
-            this.cleanup()
-          })
-          .catch(error => {
-             this.errorLog(`Web Bluetooth error:\n ${error}`);
-             this.cleanup();
-           });
+        this.startScan();
         break;
       case Scanning:
         break;
@@ -114,6 +77,40 @@ class AppContainer extends React.Component {
       } else {
         this.errorLog("Bluetooth capability not available or user rejected permission");
       }
+    });
+  }
+
+  startScan() {
+    if (!navigator.bluetooth) {
+      this.errorLog("Cannot start scan, Bluetooth not supported!");
+      return;
+    }
+    this.log("Starting a BLE scan");
+    this.setState({currentStatus: Scanning});
+    navigator.bluetooth.requestDevice({
+      filters: [{
+        services: ['environmental_sensing'],
+      }],
+      optionalServices: ['battery_service'],
+    })
+    .then(device => {
+      this.log(`User confirmed ${device.name}, attempting to connect`);
+      this.setState({currentStatus: Connecting});
+      return device.gatt.connect();
+    })
+    .then(server => {
+      this.device = server.device;
+      return server.getPrimaryService('battery_service');
+    })
+    .then(service => service.getCharacteristic('battery_level'))
+    .then(characteristic => characteristic.readValue())
+    .then(value => {
+      this.log(`Battery percentage is ${value.getUint8(0)}%`);
+      this.cleanup();
+    })
+    .catch(error => {
+      this.errorLog(`Web Bluetooth error:\n ${error}`);
+      this.cleanup();
     });
   }
 
