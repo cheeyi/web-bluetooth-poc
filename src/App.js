@@ -68,21 +68,22 @@ class AppContainer extends React.Component {
 
   checkBluetoothAvailability() {
     if (!navigator.bluetooth) {
-      this.errorLog("Bluetooth capability not available. Make sure your device supports Bluetooth and that you're accessing the web app via HTTPS");
+      this.errorLog("Web Bluetooth APIs not available. Make sure your browser supports Web Bluetooth \
+        and that you're accessing the web app via HTTPS. A Chromium-based browser is recommended.");
       return;
     }
     navigator.bluetooth.getAvailability().then(isAvailable => {
       if (isAvailable) {
         this.log("Bluetooth is available");
       } else {
-        this.errorLog("Bluetooth capability not available or user rejected permission");
+        this.errorLog("Bluetooth not available or permission was rejected");
       }
     });
   }
 
   startScan() {
     if (!navigator.bluetooth) {
-      this.errorLog("Cannot start scan, Bluetooth not supported!");
+      this.errorLog("Cannot start scan, Web Bluetooth APIs not available");
       return;
     }
     this.log("Starting a BLE scan");

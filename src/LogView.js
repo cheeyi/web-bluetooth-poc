@@ -11,7 +11,8 @@ function LogView(props) {
     const entries = props.logContent.map((content, index) =>
         <li key={index}>
             {content.date}: {content.content}
-        </li>);
+        </li>
+    );
     return (
         <div className="Log">
             <ul>
