@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Web Bluetooth POC
+
+A React web app that uses Web Bluetooth to scan for a Bluetooth device advertising the Environmental Sensing GATT service, connects to it, reads a value from the device's Battery Service's Battery Level GATT characteristic, logs it, and disconnects from the device. Obviously, this is a very specific use case, but one can easily change these by modifying `src/App.js` to scan for a different GATT service instead.
+
+To take a quick peek at the web app, visit https://cheeyi.github.io/web-bluetooth-poc/, which was deployed from the `deploy` branch and lives on the `gh-pages` branch.
+
+## Running the Web App Locally
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+In the root directory of the project:
 
-In the project directory, you can run:
+1. Run `npm install` to install dependencies.
+2. Run `npm start` to build and run the app in the development mode.
+3. Open [http://localhost:3000](http://localhost:3000) to view it in your browser (Chromium-based browsers preferred).
 
-### `npm start`
+The page will reload when you make changes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Main Limitations
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+It's important to realize that the [Web Bluetooth specification](https://webbluetoothcg.github.io/web-bluetooth) has not been finalized yet. However, here are some limitations I've come across:
 
-### `npm test`
+* Web Bluetooth's API availability is determined by your browser vendor. For example, Safari doesn't support Web Bluetooth because [Apple declined to implement it](https://www.zdnet.com/article/apple-declined-to-implement-16-web-apis-in-safari-due-to-privacy-concerns/).
+* It's possible to scan for all BLE devices in the vicinity if one specifies `acceptAllDevices: true` in the `requestDevice` call, but only GATT services specified in the `optionalServices: []` key can be interacted with. This means that we'll not be able to do anything with a device if we don't know (or didn't guess correctly) what GATT services a device has beforehand.
+* Web Bluetooth requires the user to explicitly select a device using a pop-up browser prompt. Depending on your app's use case, this may or may not be a dealbreaker.
+* Some APIs have yet to be fully implemented, such as `getDevices()` as of the time of writing. Check out the [Implementation Status](https://github.com/WebBluetoothCG/web-bluetooth/blob/main/implementation-status.md) page for updated information.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Resources
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* [React tutorial](https://reactjs.org/tutorial/tutorial.html)
+* [Web Bluetooth specification](https://webbluetoothcg.github.io/web-bluetooth)
+* [Web Bluetooth examples](https://web.dev/bluetooth)
+* [Type definition for Web Bluetooth](https://www.npmjs.com/package/@types/web-bluetooth)
