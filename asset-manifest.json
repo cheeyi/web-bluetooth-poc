@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/web-bluetooth-poc/static/css/main.803d6d97.css",
-    "main.js": "/web-bluetooth-poc/static/js/main.9a0f12af.js",
+    "main.js": "/web-bluetooth-poc/static/js/main.d3e3a523.js",
     "static/js/787.92122db9.chunk.js": "/web-bluetooth-poc/static/js/787.92122db9.chunk.js",
     "index.html": "/web-bluetooth-poc/index.html",
     "main.803d6d97.css.map": "/web-bluetooth-poc/static/css/main.803d6d97.css.map",
-    "main.9a0f12af.js.map": "/web-bluetooth-poc/static/js/main.9a0f12af.js.map",
+    "main.d3e3a523.js.map": "/web-bluetooth-poc/static/js/main.d3e3a523.js.map",
     "787.92122db9.chunk.js.map": "/web-bluetooth-poc/static/js/787.92122db9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.803d6d97.css",
-    "static/js/main.9a0f12af.js"
+    "static/js/main.d3e3a523.js"
   ]
 }
