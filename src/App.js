@@ -68,7 +68,7 @@ class AppContainer extends React.Component {
 
   checkBluetoothAvailability() {
     if (!navigator.bluetooth) {
-      this.errorLog("Bluetooth capability not available");
+      this.errorLog("Bluetooth capability not available. Make sure your device supports Bluetooth and that you're accessing the web app via HTTPS");
       return;
     }
     navigator.bluetooth.getAvailability().then(isAvailable => {
