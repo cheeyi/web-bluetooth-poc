@@ -2,7 +2,7 @@
 
 A React web app that uses Web Bluetooth to scan for a Bluetooth device advertising the Environmental Sensing GATT service, connects to it, reads a value from the device's Battery Service's Battery Level GATT characteristic, logs it, and disconnects from the device. Obviously, this is a very specific use case, but one can easily change these by modifying `src/App.js` to scan for a different GATT service instead.
 
-To take a quick peek at the web app, visit https://cheeyi.github.io/web-bluetooth-poc/, which was deployed from the `deploy` branch and lives on the `gh-pages` branch.
+To take a quick peek at the web app, visit https://cheeyi.github.io/web-bluetooth-poc/, which was deployed from the `main` branch and lives on the `gh-pages` branch.
 
 ## Running the Web App Locally
 
@@ -15,6 +15,11 @@ In the root directory of the project:
 3. Open [http://localhost:3000](http://localhost:3000) to view it in your browser (Chromium-based browsers preferred).
 
 The page will reload when you make changes.
+
+## Deploying to GitHub Pages
+
+1. Open `package.json` and update `homepage` to point to your GitHub profile and repo name.
+2. Run `npm run deploy`.
 
 ## Main Limitations
 
